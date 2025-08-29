@@ -10,6 +10,7 @@
     const header = document.getElementById('header');
     const menuToggle = document.getElementById('menuToggle');
     const mobileNav = document.getElementById('mobileNav');
+    const mobileNavBackdrop = document.getElementById('mobileNavBackdrop');
     const navLinks = document.querySelectorAll('.nav-link');
     const particlesContainer = document.getElementById('particles');
     
@@ -47,30 +48,46 @@
      * Mobile menu toggle
      */
     function initializeMobileMenu() {
-        if (!menuToggle || !mobileNav) return;
+        if (!menuToggle || !mobileNav || !mobileNavBackdrop) return;
         
+        function openMobileMenu() {
+            menuToggle.classList.add('active');
+            mobileNav.classList.add('active');
+            mobileNavBackdrop.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+        
+        function closeMobileMenu() {
+            menuToggle.classList.remove('active');
+            mobileNav.classList.remove('active');
+            mobileNavBackdrop.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+        
+        // Toggle menu on hamburger click
         menuToggle.addEventListener('click', function() {
             const isActive = menuToggle.classList.contains('active');
-            
             if (isActive) {
-                menuToggle.classList.remove('active');
-                mobileNav.classList.remove('active');
-                document.body.style.overflow = '';
+                closeMobileMenu();
             } else {
-                menuToggle.classList.add('active');
-                mobileNav.classList.add('active');
-                document.body.style.overflow = 'hidden';
+                openMobileMenu();
             }
         });
+        
+        // Close menu when clicking backdrop
+        mobileNavBackdrop.addEventListener('click', closeMobileMenu);
         
         // Close mobile menu when clicking nav links
         const mobileNavLinks = mobileNav.querySelectorAll('.nav-link');
         mobileNavLinks.forEach(link => {
-            link.addEventListener('click', function() {
-                menuToggle.classList.remove('active');
-                mobileNav.classList.remove('active');
-                document.body.style.overflow = '';
-            });
+            link.addEventListener('click', closeMobileMenu);
+        });
+        
+        // Close menu on escape key
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape' && menuToggle.classList.contains('active')) {
+                closeMobileMenu();
+            }
         });
     }
     
@@ -219,37 +236,49 @@
      * Animate number counters
      */
     function animateCounters() {
-        const counters = document.querySelectorAll('.stat-value');
-        const speed = 200;
+        const counters = document.querySelectorAll('.stat-value[data-target]');
         
         counters.forEach(counter => {
             const animate = () => {
-                const value = counter.innerText;
-                const target = parseInt(value.replace(/[^0-9]/g, ''));
+                const target = parseInt(counter.dataset.target);
+                const suffix = counter.dataset.suffix || '';
+                let current = 0;
+                const increment = target / 60; // 60 frames for smooth animation
                 
-                if (isNaN(target)) return;
+                const updateCounter = () => {
+                    if (current < target) {
+                        current += increment;
+                        let displayValue = Math.floor(current);
+                        
+                        // Format large numbers
+                        if (target >= 10000) {
+                            displayValue = Math.floor(current / 1000);
+                        }
+                        
+                        counter.textContent = displayValue + suffix;
+                        requestAnimationFrame(updateCounter);
+                    } else {
+                        // Final value
+                        let finalValue = target;
+                        if (target >= 10000) {
+                            finalValue = target / 1000;
+                        }
+                        counter.textContent = finalValue + suffix;
+                    }
+                };
                 
-                const count = +counter.innerText.replace(/[^0-9]/g, '');
-                const inc = target / speed;
-                
-                if (count < target) {
-                    counter.innerText = Math.ceil(count + inc);
-                    setTimeout(animate, 1);
-                } else {
-                    counter.innerText = value;
-                }
+                updateCounter();
             };
             
             // Start animation when in viewport
             const observer = new IntersectionObserver((entries) => {
                 entries.forEach(entry => {
                     if (entry.isIntersecting) {
-                        counter.innerText = '0';
                         animate();
                         observer.unobserve(entry.target);
                     }
                 });
-            });
+            }, { threshold: 0.5 });
             
             observer.observe(counter);
         });

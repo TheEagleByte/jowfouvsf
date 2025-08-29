@@ -373,15 +373,21 @@
 /* Mobile Navigation */
 .mobile-nav {
   position: fixed;
-  top: 56px;
+  top: 64px;
   left: 0;
-  right: 0;
-  bottom: 0;
+  width: 100vw;
   background-color: var(--primary-white);
   padding: var(--space-6);
   transform: translateX(-100%);
   transition: transform var(--duration-300) var(--ease-out);
-  z-index: var(--z-90);
+  z-index: 90;
+  box-shadow: var(--shadow-lg);
+}
+
+@media (max-width: 768px) {
+  .mobile-nav {
+    top: 56px;
+  }
 }
 
 .mobile-nav.active {
@@ -392,6 +398,25 @@
   flex-direction: column;
   align-items: flex-start;
   gap: var(--space-4);
+}
+
+/* Mobile Menu Backdrop */
+.mobile-nav-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 85;
+  opacity: 0;
+  visibility: hidden;
+  transition: all var(--duration-300) var(--ease-out);
+}
+
+.mobile-nav-backdrop.active {
+  opacity: 1;
+  visibility: visible;
 }
 
 /* Stats */

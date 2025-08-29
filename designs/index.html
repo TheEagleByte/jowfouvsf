@@ -28,7 +28,7 @@
                 </a>
                 
                 <!-- Desktop Navigation -->
-                <nav class="nav md:flex hidden">
+                <nav class="nav desktop-nav">
                     <a href="#features" class="nav-link">Features</a>
                     <a href="#ai-platform" class="nav-link">AI Platform</a>
                     <a href="#community" class="nav-link">Community</a>
@@ -38,11 +38,13 @@
                 
                 <!-- CTA Buttons -->
                 <div class="flex items-center gap-4">
-                    <button class="btn btn-ghost btn-md hidden md:flex">Sign In</button>
-                    <button class="btn btn-primary btn-md hidden md:flex">Get Started</button>
+                    <div class="header-cta-desktop gap-4">
+                        <button class="btn btn-ghost btn-md">Sign In</button>
+                        <button class="btn btn-primary btn-md">Get Started</button>
+                    </div>
                     
                     <!-- Mobile Menu Toggle -->
-                    <button class="menu-toggle md:hidden" id="menuToggle">
+                    <button class="menu-toggle" id="menuToggle">
                         <span></span>
                         <span></span>
                         <span></span>
@@ -50,6 +52,9 @@
                 </div>
             </div>
         </div>
+        
+        <!-- Mobile Navigation Backdrop -->
+        <div class="mobile-nav-backdrop" id="mobileNavBackdrop"></div>
         
         <!-- Mobile Navigation -->
         <nav class="mobile-nav" id="mobileNav">
@@ -75,31 +80,31 @@
                 <h1 class="animate-fade-in-up mb-6" style="max-width: 900px;">
                     Recruiting Without Limits
                 </h1>
-                <p class="text-xl mb-8 animate-fade-in-up stagger-1" style="max-width: 600px; color: var(--neutral-600);">
+                <p class="text-xl mb-6 animate-fade-in-up stagger-1" style="max-width: 600px; color: var(--neutral-600);">
                     Harness the power of AI-driven recruitment for the sustainable energy sector. 
                     Speed, scale, and sophistication combined.
                 </p>
-                <div class="flex gap-4 animate-fade-in-up stagger-2">
+                <div class="flex gap-4 mb-6 animate-fade-in-up stagger-2">
                     <button class="btn btn-primary btn-lg">Start Free Trial</button>
                     <button class="btn btn-secondary btn-lg">Watch Demo</button>
                 </div>
                 
                 <!-- Stats -->
-                <div class="stats mt-16 animate-fade-in-up stagger-3" style="width: 100%; max-width: 800px;">
-                    <div class="stat-item reveal">
-                        <div class="stat-value">10K+</div>
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-8 animate-fade-in-up stagger-3" style="width: 100%; max-width: 1000px;">
+                    <div class="stat-item reveal text-center">
+                        <div class="stat-value" data-target="10000" data-suffix="K+">0</div>
                         <div class="stat-label">Active Recruiters</div>
                     </div>
-                    <div class="stat-item reveal stagger-1">
-                        <div class="stat-value">500K+</div>
+                    <div class="stat-item reveal stagger-1 text-center">
+                        <div class="stat-value" data-target="500000" data-suffix="K+">0</div>
                         <div class="stat-label">Placements Made</div>
                     </div>
-                    <div class="stat-item reveal stagger-2">
-                        <div class="stat-value">98%</div>
+                    <div class="stat-item reveal stagger-2 text-center">
+                        <div class="stat-value" data-target="98" data-suffix="%">0</div>
                         <div class="stat-label">Match Accuracy</div>
                     </div>
-                    <div class="stat-item reveal stagger-3">
-                        <div class="stat-value">24h</div>
+                    <div class="stat-item reveal stagger-3 text-center">
+                        <div class="stat-value" data-target="24" data-suffix="h">0</div>
                         <div class="stat-label">Avg. Time to Hire</div>
                     </div>
                 </div>
@@ -253,8 +258,8 @@
                 </p>
             </div>
             
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                <div class="card text-center reveal">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-4xl mx-auto">
+                <div class="card text-center reveal p-6">
                     <div class="mb-4">
                         <div style="width: 80px; height: 80px; margin: 0 auto; background: linear-gradient(135deg, var(--primary-green), var(--accent-emerald)); border-radius: 50%;"></div>
                     </div>
@@ -269,7 +274,7 @@
                     </div>
                 </div>
                 
-                <div class="card text-center reveal stagger-1">
+                <div class="card text-center reveal stagger-1 p-6">
                     <div class="mb-4">
                         <div style="width: 80px; height: 80px; margin: 0 auto; background: linear-gradient(135deg, var(--accent-teal), var(--primary-green)); border-radius: 50%;"></div>
                     </div>
@@ -284,7 +289,7 @@
                     </div>
                 </div>
                 
-                <div class="card text-center reveal stagger-2">
+                <div class="card text-center reveal stagger-2 p-6">
                     <div class="mb-4">
                         <div style="width: 80px; height: 80px; margin: 0 auto; background: linear-gradient(135deg, var(--accent-emerald), var(--accent-teal)); border-radius: 50%;"></div>
                     </div>
@@ -317,7 +322,7 @@
             </div>
             
             <div class="card hover-lift reveal" style="padding: 40px;">
-                <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-6 mb-8">
                     <div class="text-center">
                         <div class="text-3xl font-bold text-primary mb-2">$124,500</div>
                         <div class="text-sm text-muted">Monthly Revenue</div>
@@ -362,7 +367,7 @@
             <h2 class="mb-6 reveal" style="color: var(--primary-white);">
                 Ready to Transform Your Recruitment?
             </h2>
-            <p class="text-xl mb-8 reveal stagger-1" style="max-width: 600px; margin: 0 auto; color: var(--neutral-400);">
+            <p class="text-xl mb-6 mx-auto reveal stagger-1" style="max-width: 600px; color: var(--neutral-400);">
                 Join thousands of recruiters who are already experiencing the future of talent acquisition
             </p>
             <div class="flex justify-center gap-4 reveal stagger-2">
@@ -421,9 +426,9 @@
             
             <div class="divider" style="background-color: var(--neutral-800);"></div>
             
-            <div class="flex justify-between items-center">
+            <div class="flex flex-col md:flex-row justify-between items-center gap-4">
                 <p class="text-sm" style="color: var(--neutral-500);">
-                    © 2024 Inventure Recruitment. All rights reserved.
+                    © 2025 Inventure Recruitment. All rights reserved.
                 </p>
                 <div class="flex gap-4">
                     <a href="#" class="text-sm" style="color: var(--neutral-500);">Twitter</a>
