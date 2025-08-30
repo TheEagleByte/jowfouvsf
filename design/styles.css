@@ -1240,7 +1240,7 @@ section {
 
 /* Dashboard Layout */
 .dashboard-layout {
-  background-color: var(--neutral-50);
+  background: linear-gradient(135deg, var(--neutral-50) 0%, var(--neutral-100) 100%);
   min-height: 100vh;
 }
 
@@ -1248,9 +1248,10 @@ section {
   position: sticky;
   top: 0;
   z-index: 100;
-  background-color: var(--primary-white);
+  background-color: rgba(255, 255, 255, 0.95);
   border-bottom: 1px solid var(--neutral-200);
   backdrop-filter: blur(10px);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
 }
 
 .dashboard-title {
@@ -1498,12 +1499,31 @@ section {
   border-radius: var(--radius-xl);
   padding: var(--space-6);
   transition: all var(--duration-300) var(--ease-out);
+  position: relative;
+  overflow: hidden;
+}
+
+.metric-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--primary-green), var(--accent-emerald));
+  transform: scaleX(0);
+  transition: transform var(--duration-300) var(--ease-out);
+  transform-origin: left;
 }
 
 .metric-card:hover {
-  transform: translateY(-2px);
-  box-shadow: var(--shadow-lg);
+  transform: translateY(-4px);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
   border-color: var(--neutral-300);
+}
+
+.metric-card:hover::before {
+  transform: scaleX(1);
 }
 
 .metric-header {
@@ -1544,6 +1564,51 @@ section {
 
 .metric-change.negative {
   color: var(--error);
+}
+
+.metric-sparkline {
+  margin-top: var(--space-4);
+  opacity: 0.7;
+  transition: opacity var(--duration-200) var(--ease-out);
+}
+
+.metric-card:hover .metric-sparkline {
+  opacity: 1;
+}
+
+.metric-sparkline svg {
+  width: 100%;
+  height: 30px;
+}
+
+.metric-sparkline polyline {
+  stroke-dasharray: 200;
+  stroke-dashoffset: 200;
+  animation: drawLine 2s ease-out forwards;
+  animation-delay: 0.5s;
+}
+
+@keyframes drawLine {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+@keyframes fadeInCircle {
+  from {
+    opacity: 0;
+    transform: scale(0);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.metric-sparkline circle {
+  opacity: 0;
+  animation: fadeInCircle 0.5s ease-out forwards;
+  animation-delay: 2.5s;
 }
 
 /* Dashboard Content Grid */
@@ -1619,6 +1684,19 @@ section {
   background: linear-gradient(90deg, var(--primary-green), var(--accent-emerald));
   border-radius: var(--radius-full);
   transition: width var(--duration-500) var(--ease-out);
+  position: relative;
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+.progress-bar::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 50%;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.3), transparent);
+  border-radius: var(--radius-full) var(--radius-full) 0 0;
 }
 
 /* Recent Activity */
