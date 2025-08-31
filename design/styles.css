@@ -1455,7 +1455,6 @@ section {
 
 @media (min-width: 1024px) {
   .dashboard-main {
-    margin-left: 280px;
     width: calc(100% - 280px);
     padding: var(--space-3) var(--space-4);
   }
