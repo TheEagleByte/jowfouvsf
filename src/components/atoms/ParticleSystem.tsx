@@ -13,7 +13,7 @@ interface Particle {
 
 export function ParticleSystem() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  const animationIdRef = useRef<number>();
+  const animationIdRef = useRef<number>(0);
   const particlesRef = useRef<Particle[]>([]);
   const lastTimeRef = useRef<number>(0);
 
