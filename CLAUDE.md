@@ -10,27 +10,49 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Current Architecture
 
-### Static Website Structure
+The project uses a **dual architecture** approach:
+
+### 1. Static Marketing Website (`design/` directory)
 ```
-designs/
+design/
 ├── index.html          # Main landing page
-├── css/
-│   ├── variables.css   # Design tokens and CSS custom properties
-│   ├── main.css       # Core layout and typography
-│   ├── components.css # UI components (buttons, cards, forms)
-│   └── animations.css # Animation definitions
-└── js/
-    ├── main.js        # Core functionality (navigation, particles)
-    ├── components.js  # Interactive components
-    └── animations.js  # Animation controllers
+├── dashboard.html      # Static dashboard prototype
+├── styles.css         # CSS styles
+└── script.js          # JavaScript functionality
 ```
 
+### 2. Next.js Dynamic Application (`src/` directory)
+```
+src/
+├── app/
+│   ├── layout.tsx         # Root layout with Geist fonts
+│   ├── page.tsx           # Home page with organism components
+│   ├── globals.css        # Global styles with CSS custom properties
+│   └── dashboard/         # Dashboard pages
+│       ├── page.tsx       # Main dashboard
+│       ├── recruiter/     # Recruiter-specific dashboard
+│       ├── candidate/     # Candidate-specific dashboard
+│       └── admin/         # Admin dashboard
+├── components/
+│   ├── ui/               # shadcn/ui components (Button, Card, Input)
+│   ├── atoms/            # Basic components (Logo, Container, Counter)
+│   ├── organisms/        # Complex components (Header, Hero, Features)
+│   └── charts/           # Data visualization components
+├── hooks/               # Custom React hooks
+└── lib/                # Utility functions
+```
+
+### Development Commands
+- `npm run dev` - Start Next.js development server with Turbopack
+- `npm run build` - Build production Next.js app with Turbopack  
+- `npm start` - Start production server
+
 ### Key Files
-- `designs/index.html` - Complete single-page application with all sections
-- `designs/css/variables.css` - Comprehensive design system with CSS custom properties
-- `designs/js/main.js` - Main JavaScript with mobile menu, smooth scroll, particle system
-- `DESIGN_SPEC.md` - Detailed design specifications and component guidelines
-- `FUTURE_ARCHITECTURE.md` - Technical roadmap for evolution to dynamic platform
+- `src/app/page.tsx` - Main homepage using organism-based component architecture
+- `src/app/globals.css` - CSS custom properties matching design system
+- `src/components/organisms/` - Page-level components (Header, Hero, Features, etc.)
+- `design/index.html` - Static marketing site prototype
+- `FUTURE_ARCHITECTURE.md` - Technical roadmap for platform evolution
 
 ## Design System
 
@@ -52,19 +74,22 @@ designs/
 
 ## Development Workflow
 
-### No Build System
-This is a static website with no package.json, build tools, or dependency management. Files are served directly from the `designs/` directory.
+### Next.js Development (Primary)
+- **Tech Stack**: Next.js 15.5.2, React 19.1.0, TypeScript, Tailwind CSS v4
+- **Development**: `npm run dev` starts Turbopack-powered dev server on http://localhost:3000
+- **Component Library**: shadcn/ui with Radix UI primitives
+- **Styling**: Tailwind CSS with CSS custom properties for design tokens
 
-### Testing
-- Open `designs/index.html` directly in browser
-- Test responsive design at breakpoints: 640px, 768px, 1024px, 1280px, 1536px
-- Verify animations and interactive elements work correctly
+### Static Prototype (Secondary)
+- **Purpose**: Design prototyping and static fallback
+- **Testing**: Open `design/index.html` directly in browser
+- **No build system**: Direct HTML/CSS/JS files
 
-### File Organization Principles
-- CSS follows atomic design principles (variables → main → components → animations)
-- JavaScript is modular with clear separation of concerns
-- All styles use CSS custom properties from `variables.css`
-- Semantic HTML with accessibility considerations
+### Architecture Patterns
+- **Atomic Design**: Components organized as atoms → organisms → pages
+- **CSS Variables**: Consistent design tokens in `src/app/globals.css`
+- **TypeScript**: Strict typing with Next.js app router
+- **File-based Routing**: Next.js app directory structure
 
 ## Key Features & Components
 
@@ -97,30 +122,43 @@ Refer to `FUTURE_ARCHITECTURE.md` for detailed technical roadmap.
 
 ## Code Style Guidelines
 
-### HTML
-- Semantic elements with proper ARIA labels
-- BEM-like class naming for components
-- Mobile-first responsive design
+### React/TypeScript (Next.js App)
+- **Components**: Use TypeScript with proper prop typing
+- **Styling**: Tailwind classes with CSS custom properties for design tokens
+- **Architecture**: Atomic design pattern (atoms → organisms → pages)
+- **State**: Client components with "use client" directive when needed
+- **Imports**: Absolute imports using `@/` path mapping
 
-### CSS
-- Use CSS custom properties exclusively for consistency
-- Follow design system tokens from `variables.css`
-- Minimize specificity, prefer class-based selectors
-- Animation timing follows predefined duration and easing variables
+### Static HTML/CSS/JS (Design Prototype)
+- **HTML**: Semantic elements with proper ARIA labels
+- **CSS**: CSS custom properties exclusively, minimize specificity
+- **JavaScript**: ES6+ with browser compatibility
+- **Responsive**: Mobile-first design with defined breakpoints
 
-### JavaScript
-- ES6+ features with browser compatibility
-- Event delegation for performance
-- Intersection Observer API for scroll animations
-- Debounced resize handlers
+### Shared Design System
+- **Colors**: Use CSS custom properties from globals.css
+- **Typography**: Inter (sans) and JetBrains Mono (monospace)
+- **Spacing**: 8px spacing system with Tailwind scale
+- **Components**: Consistent button, card, and form styles across both systems
 
 ## Important Notes
 
-- All colors, spacing, and typography must use CSS custom properties
+### Development Priorities
+- **Primary Development**: Focus on Next.js app (`src/`) for new features
+- **Design System**: Maintain consistency between static and dynamic versions
+- **CSS Custom Properties**: All colors, spacing, and typography must use design tokens
+- **Mobile Responsiveness**: Test thoroughly (44px minimum touch targets)
+- **Accessibility**: Preserve keyboard navigation and focus indicators
+
+### Testing & Validation
+- **Next.js**: Use `npm run dev` for development server
+- **Static Site**: Test `design/index.html` directly in browser
+- **Responsive Design**: Test at breakpoints: 640px, 768px, 1024px, 1280px, 1536px
+- **Browser Testing**: Use playwright MCP server to validate changes
+- **Documentation**: Use context7 MCP server for up-to-date library references
+
+### Project Evolution
+- Current phase focuses on marketing site and dashboard prototypes
+- Future features should integrate with existing component architecture
 - Maintain minimalist design philosophy per brand guidelines
-- Test mobile responsiveness thoroughly (touch targets 44px minimum)
-- Preserve accessibility features (keyboard navigation, focus indicators)
-- Animations should be smooth and purposeful, not decorative
-- Future dynamic features should integrate with existing component system
-- Use the playwright MCP server to validate and test your changes in a browser
-- Use the context7 MCP server to reference up-to-date documentation about anything as you're building it
+- Refer to `FUTURE_ARCHITECTURE.md` for long-term technical roadmap
